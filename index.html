@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StonkCounter</title>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@900&display=swap" rel="stylesheet">
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <p>Enter your hourly wage</p>
+    <input type="text" placeholder="$ per hour" id="moneyPerHour">
+    <button id="submit">Submit</button>
+
+    <p>Now watch your stonks in real time (per second)</p>
+
+    <p id="stonksMeter"></p>
+    <p id="secondsElapsed"></p>
+
+</body>
+
+
+<script>
+    var that = this;
+    var perHour = 0;
+    var perSecond = 0;
+    var total = 0;
+    var seconds = 0;
+    var minutes = 0;
+    var hours = 0;
+
+    $("#submit").click(function () {
+        that.perHour = parseFloat($("#moneyPerHour").val())
+        console.log(that.perHour)
+        that.total = 0;
+
+        // that.perSecond = that.perHour / 3600
+        that.perSecond = that.perHour / 36000
+        seconds = 0;
+        minutes = 0;
+        hours = 0;
+    })
+
+    setInterval(function () {
+        total += perSecond
+       
+        $("#stonksMeter").text("$" + parseFloat(total).toFixed(5) + " stonks")
+
+    }, 100);
+
+    setInterval(function () {
+
+        seconds++;
+        let f_minutes = minutes.toString().padStart(2, "0");
+        let f_seconds = seconds.toString().padStart(2, "0");
+        let f_hours = hours.toString().padStart(2, "0");
+
+        $("#secondsElapsed").text(f_hours + ":" + f_minutes + ":" + f_seconds + " elapsed")
+
+        if (seconds > 59) {
+            minutes++;
+            seconds = 0;
+        }
+        if (minutes > 59) {
+            hours++;
+            minutes = 0;
+        }
+    }, 1000)
+
+
+</script>
+
+
+<style>
+    p {
+        font-family: 'Orbitron', sans-serif;
+        font-size: 1.5rem;
+
+    }
+
+    #stonksMeter {
+        font-size: 5em;
+        font-variant-numeric: tabular-nums;
+        font-family: 'VT323', monospace;
+        text-align: center;
+    }
+
+    #secondsElapsed {
+        font-size: 0.9em;
+        text-align: center;
+    }
+</style>
+
+</html>
